@@ -11,5 +11,5 @@
 #    (mv ../riscv-tools/riscv-isa-sim/configure.ac ../riscv-tools/riscv-isa-sim/configure.ac.old && ln -s $(readlink -f ../sha3-accel/isa-sim/configure.ac) ../riscv-tools/riscv-isa-sim/configure.ac && ln -s $(readlink -f ../sha3-accel/isa-sim/riscv-sha3.pc.in) ../riscv-tools/riscv-isa-sim/riscv-sha3.pc.in)
 (stat ../src/main/scala/PrivateConfigs.scala 1>/dev/null 2>&1) || \
     (ln -s $(readlink -f ../sha3-accel/config/PrivateConfigs.scala) ../src/main/scala/PrivateConfigs.scala)
-((patch -N --dry-run ../vsim/Makefile ../sha3-accel/patches/vsim/Makefile.patch)> /dev/null 2>&1) && patch -N ../vsim/Makefile ../sha3-accel/patches/vsim/Makefile.patch
-((patch -N --dry-run ../vsim/Makefrag ../sha3-accel/patches/vsim/Makefrag.patch) > /dev/null 2>&1) && patch -N ../vsim/Makefrag ../sha3-accel/patches/vsim/Makefrag.patch
+(patch -N --dry-run ../vsim/Makefile ../sha3-accel/patches/vsim/Makefile.patch > /dev/null) && patch -N ../vsim/Makefile ../sha3-accel/patches/vsim/Makefile.patch >/dev/null
+(patch -N --dry-run ../vsim/Makefrag ../sha3-accel/patches/vsim/Makefrag.patch > /dev/null) && patch -N ../vsim/Makefrag ../sha3-accel/patches/vsim/Makefrag.patch >/dev/null

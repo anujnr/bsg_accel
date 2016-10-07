@@ -1,2 +1,10 @@
-12a13
->   $(acc_verilog_dir)/*.v \
+--- Makefrag1	2016-10-06 21:53:18.734940462 -0700
++++ rocket-chip/vsim/Makefrag	2016-10-06 21:50:44.772971107 -0700
+@@ -10,6 +10,7 @@
+ 	$(generated_dir)/memdessertMemDessert.$(CONFIG).v \
+ 	$(base_dir)/vsrc/$(TB).v \
+ 	$(base_dir)/vsrc/backup_mem.v \
++  $(acc_verilog_dir)/*.v \
+ 
+ 
+ # C sources

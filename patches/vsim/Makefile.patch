@@ -1,2 +1,10 @@
-13a14
-> acc_verilog_dir = $(base_dir)/sha3-accel/src/main/verilog
+--- Makefile1	2016-10-06 23:27:15.024098717 -0700
++++ rocket-chip/vsim/Makefile	2016-10-06 21:50:53.485082356 -0700
+@@ -11,6 +11,7 @@
+ 
+ base_dir = $(abspath ..)
+ generated_dir = $(abspath ./generated-src)
++acc_verilog_dir = $(base_dir)/sha3-accel/src/main/verilog
+ mem_gen = $(base_dir)/vsim/vlsi_mem_gen
+ sim_dir = .
+ output_dir = $(sim_dir)/output
