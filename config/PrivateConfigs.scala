@@ -18,16 +18,6 @@ class BsgAccelConfig extends Config {
       case BufferSram => Dump(Knob("buffer_sram"))
       case RoccMaxTaggedMemXacts => 32
 
-      //Place to add more accelerator instantiations
-      //For every new Accel, use an unused custom opcode and CoreName as per Verilog module name
-
-      case BuildRoCC => Seq( 
-                          RoccParameters(    
-                            opcodes = OpcodeSet.custom0,
-                            generator = (p: Parameters) => (Module(new RoCCBlackBoxWrapper()(p.alterPartial({ case CoreName => "Sha3Accel" })))) ),
-                          RoccParameters(
-                            opcodes = OpcodeSet.custom1,
-                            generator = (p: Parameters) => (Module(new RoCCBlackBoxWrapper()(p.alterPartial({ case CoreName => "AccumulatorExample" })))) ))
     }
   }
  
@@ -46,6 +36,84 @@ class BsgAccelConfig extends Config {
   }
 }
 
-class BsgAccelVLSIConfig extends Config(new BsgAccelConfig ++ new DefaultVLSIConfig)
-class BsgAccelFPGAConfig extends Config(new BsgAccelConfig ++ new DefaultFPGAConfig) 
-class BsgAccelCPPConfig extends Config(new BsgAccelConfig ++ new DefaultCPPConfig) 
+class With1Accel extends Config {
+  override val topDefinitions:World.TopDefs = {
+    (pname,site,here) => pname match {
+      case BuildRoCC => Seq( 
+                          	RoccParameters(
+                            	opcodes = OpcodeSet.custom0,
+                            	generator = (p: Parameters) => (Module(new RoCCBlackBoxWrapper()(p.alterPartial({ case CoreName => "Accel0" })))) ))
+		}
+	}
+}
+
+class With2Accel extends Config {
+  override val topDefinitions:World.TopDefs = {
+    (pname,site,here) => pname match {
+      case BuildRoCC => Seq( 
+                          	RoccParameters(    
+                            	opcodes = OpcodeSet.custom0,
+                            	generator = (p: Parameters) => (Module(new RoCCBlackBoxWrapper()(p.alterPartial({ case CoreName => "Accel0" })))) ),
+                          	RoccParameters(
+                            	opcodes = OpcodeSet.custom1,
+                            	generator = (p: Parameters) => (Module(new RoCCBlackBoxWrapper()(p.alterPartial({ case CoreName => "Accel1" })))) ))
+		}
+	}
+}
+class With3Accel extends Config {
+  override val topDefinitions:World.TopDefs = {
+    (pname,site,here) => pname match {
+      case BuildRoCC => Seq( 
+                          	RoccParameters(    
+                            	opcodes = OpcodeSet.custom0,
+                            	generator = (p: Parameters) => (Module(new RoCCBlackBoxWrapper()(p.alterPartial({ case CoreName => "Accel0" })))) ),
+                          	RoccParameters(
+                            	opcodes = OpcodeSet.custom1,
+                            	generator = (p: Parameters) => (Module(new RoCCBlackBoxWrapper()(p.alterPartial({ case CoreName => "Accel1" })))) ),
+                          	RoccParameters(
+                            	opcodes = OpcodeSet.custom2,
+                            	generator = (p: Parameters) => (Module(new RoCCBlackBoxWrapper()(p.alterPartial({ case CoreName => "Accel2" })))) ))
+		}
+	}
+}
+
+class With4Accel extends Config {
+  override val topDefinitions:World.TopDefs = {
+    (pname,site,here) => pname match {
+      case BuildRoCC => Seq( 
+                          	RoccParameters(    
+                            	opcodes = OpcodeSet.custom0,
+                            	generator = (p: Parameters) => (Module(new RoCCBlackBoxWrapper()(p.alterPartial({ case CoreName => "Accel0" })))) ),
+                          	RoccParameters(
+                            	opcodes = OpcodeSet.custom1,
+                            	generator = (p: Parameters) => (Module(new RoCCBlackBoxWrapper()(p.alterPartial({ case CoreName => "Accel1" })))) ),
+                          	RoccParameters(
+                            	opcodes = OpcodeSet.custom2,
+                            	generator = (p: Parameters) => (Module(new RoCCBlackBoxWrapper()(p.alterPartial({ case CoreName => "Accel2" })))) ),
+                          	RoccParameters(
+                            	opcodes = OpcodeSet.custom3,
+                            	generator = (p: Parameters) => (Module(new RoCCBlackBoxWrapper()(p.alterPartial({ case CoreName => "Accel3" })))) ))
+		}
+	}
+}
+      //Place to add more accelerator instantiations
+      //For every new Accel, use an unused custom opcode and CoreName as per Verilog module name
+
+class Bsg1AccelVLSIConfig extends Config(new BsgAccelConfig ++ new DefaultVLSIConfig ++ new With1Accel)
+class Bsg2AccelVLSIConfig extends Config(new BsgAccelConfig ++ new DefaultVLSIConfig ++ new With2Accel)
+class Bsg3AccelVLSIConfig extends Config(new BsgAccelConfig ++ new DefaultVLSIConfig ++ new With3Accel)
+class Bsg4AccelVLSIConfig extends Config(new BsgAccelConfig ++ new DefaultVLSIConfig ++ new With4Accel)
+
+class Bsg1AccelCPPConfig extends Config(new BsgAccelConfig ++ new DefaultCPPConfig ++ new With1Accel)
+class Bsg2AccelCPPConfig extends Config(new BsgAccelConfig ++ new DefaultCPPConfig ++ new With2Accel)
+class Bsg3AccelCPPConfig extends Config(new BsgAccelConfig ++ new DefaultCPPConfig ++ new With3Accel)
+class Bsg4AccelCPPConfig extends Config(new BsgAccelConfig ++ new DefaultCPPConfig ++ new With4Accel)
+
+class Bsg1AccelFPGAConfig extends Config(new BsgAccelConfig ++ new DefaultFPGAConfig ++ new With1Accel)
+class Bsg2AccelFPGAConfig extends Config(new BsgAccelConfig ++ new DefaultFPGAConfig ++ new With2Accel)
+class Bsg3AccelFPGAConfig extends Config(new BsgAccelConfig ++ new DefaultFPGAConfig ++ new With3Accel)
+class Bsg4AccelFPGAConfig extends Config(new BsgAccelConfig ++ new DefaultFPGAConfig ++ new With4Accel)
+
+class HurricaneConfig extends Config(new With2Cores ++ new WithOneOrMaxChannels ++ new With8MemoryChannels ++ new WithL2Capacity256 ++ new DefaultL2VLSIConfig ++ new BsgAccelConfig ++ new With1Accel)
+
+
