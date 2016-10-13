@@ -17,7 +17,6 @@ class BsgAccelConfig extends Config {
       case FastMem => Knob("fast_mem")
       case BufferSram => Dump(Knob("buffer_sram"))
       case RoccMaxTaggedMemXacts => 32
-
     }
   }
  
@@ -99,20 +98,20 @@ class With4Accel extends Config {
       //Place to add more accelerator instantiations
       //For every new Accel, use an unused custom opcode and CoreName as per Verilog module name
 
-class Bsg1AccelVLSIConfig extends Config(new BsgAccelConfig ++ new DefaultVLSIConfig ++ new With1Accel)
-class Bsg2AccelVLSIConfig extends Config(new BsgAccelConfig ++ new DefaultVLSIConfig ++ new With2Accel)
-class Bsg3AccelVLSIConfig extends Config(new BsgAccelConfig ++ new DefaultVLSIConfig ++ new With3Accel)
-class Bsg4AccelVLSIConfig extends Config(new BsgAccelConfig ++ new DefaultVLSIConfig ++ new With4Accel)
+class Bsg1AccelVLSIConfig extends Config(new BsgAccelConfig ++ new With1Accel ++ new DefaultVLSIConfig)
+class Bsg2AccelVLSIConfig extends Config(new BsgAccelConfig ++ new With2Accel ++ new DefaultVLSIConfig)
+class Bsg3AccelVLSIConfig extends Config(new BsgAccelConfig ++ new With3Accel ++ new DefaultVLSIConfig)
+class Bsg4AccelVLSIConfig extends Config(new BsgAccelConfig ++ new With4Accel ++ new DefaultVLSIConfig)
 
-class Bsg1AccelCPPConfig extends Config(new BsgAccelConfig ++ new DefaultCPPConfig ++ new With1Accel)
-class Bsg2AccelCPPConfig extends Config(new BsgAccelConfig ++ new DefaultCPPConfig ++ new With2Accel)
-class Bsg3AccelCPPConfig extends Config(new BsgAccelConfig ++ new DefaultCPPConfig ++ new With3Accel)
-class Bsg4AccelCPPConfig extends Config(new BsgAccelConfig ++ new DefaultCPPConfig ++ new With4Accel)
+class Bsg1AccelCPPConfig extends Config(new BsgAccelConfig ++ new With1Accel ++ new DefaultCPPConfig)
+class Bsg2AccelCPPConfig extends Config(new BsgAccelConfig ++ new With2Accel ++ new DefaultCPPConfig)
+class Bsg3AccelCPPConfig extends Config(new BsgAccelConfig ++ new With3Accel ++ new DefaultCPPConfig)
+class Bsg4AccelCPPConfig extends Config(new BsgAccelConfig ++ new With4Accel ++ new DefaultCPPConfig)
 
-class Bsg1AccelFPGAConfig extends Config(new BsgAccelConfig ++ new DefaultFPGAConfig ++ new With1Accel)
-class Bsg2AccelFPGAConfig extends Config(new BsgAccelConfig ++ new DefaultFPGAConfig ++ new With2Accel)
-class Bsg3AccelFPGAConfig extends Config(new BsgAccelConfig ++ new DefaultFPGAConfig ++ new With3Accel)
-class Bsg4AccelFPGAConfig extends Config(new BsgAccelConfig ++ new DefaultFPGAConfig ++ new With4Accel)
+class Bsg1AccelFPGAConfig extends Config(new BsgAccelConfig ++ new With1Accel ++ new DefaultFPGAConfig)
+class Bsg2AccelFPGAConfig extends Config(new BsgAccelConfig ++ new With2Accel ++ new DefaultFPGAConfig)
+class Bsg3AccelFPGAConfig extends Config(new BsgAccelConfig ++ new With3Accel ++ new DefaultFPGAConfig)
+class Bsg4AccelFPGAConfig extends Config(new BsgAccelConfig ++ new With4Accel ++ new DefaultFPGAConfig)
 
 class HurricaneConfig extends Config(new With2Cores ++ new WithOneOrMaxChannels ++ new With8MemoryChannels ++ new WithL2Capacity256 ++ new DefaultL2VLSIConfig ++ new BsgAccelConfig ++ new With1Accel)
 
