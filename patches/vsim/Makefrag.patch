@@ -1,5 +1,5 @@
---- Makefrag.old	2016-10-10 21:27:16.653612473 -0700
-+++ Makefrag	2016-10-10 21:38:34.091570472 -0700
+--- Makefrag	2017-01-15 14:44:01.257560966 -0800
++++ Makefrag.orig	2017-01-14 18:00:59.000000000 -0800
 @@ -10,6 +10,7 @@
  	$(generated_dir)/memdessertMemDessert.$(CONFIG).v \
  	$(base_dir)/vsrc/$(TB).v \

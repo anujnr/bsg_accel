@@ -1,10 +1,10 @@
---- Makefile.old	2016-10-10 21:27:09.561629043 -0700
-+++ Makefile	2016-10-10 21:36:21.060497349 -0700
-@@ -14,6 +14,7 @@
+--- Makefile	2017-01-15 14:58:11.712281482 -0800
++++ Makefile.new	2017-01-15 14:55:07.898748277 -0800
+@@ -11,6 +11,7 @@
+ 
+ base_dir = $(abspath ..)
+ generated_dir = $(abspath ./generated-src)
++acc_verilog_dir = $(base_dir)/sha3-accel/src/main/verilog
  mem_gen = $(base_dir)/vsim/vlsi_mem_gen
  sim_dir = .
  output_dir = $(sim_dir)/output
-+acc_verilog_dir = $(base_dir)/sha3-accel/src/main/verilog
- 
- BACKEND ?= rocketchip.RocketChipBackend
- CONFIG ?= DefaultVLSIConfig

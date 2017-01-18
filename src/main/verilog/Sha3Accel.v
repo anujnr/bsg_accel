@@ -5758,7 +5758,7 @@ module DpathModule(input clk, input reset,
   end
 endmodule
 
-module Accel0(input clk, input reset,
+module Accel1(input clk, input reset,
     output io_cmd_ready,
     input  io_cmd_valid,
     input [6:0] io_cmd_bits_inst_funct,
