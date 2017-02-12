@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 #see LICENSE for license
 
-(stat ../sha3-accel                                    1>/dev/null 2>&1) || \
-    (ln -s $(readlink -f ../bsg-accel) ../sha3-accel)
+(stat ../accel                                    1>/dev/null 2>&1) || \
+    (ln -s $(readlink -f ../bsg-accel) ../accel)
 (stat ../Makefrag.old                            1>/dev/null 2>&1) || \
-    (mv ../Makefrag ../Makefrag.old && ln -s $(readlink -f ../sha3-accel/config/Makefrag) ../Makefrag)
-#(stat ../riscv-tools/riscv-isa-sim/sha3-accel             1>/dev/null 2>&1) || \
-#    (ln -s $(readlink -f ../sha3-accel/isa-sim/sha3-accel) ../riscv-tools/riscv-isa-sim/sha3-accel)
+    (mv ../Makefrag ../Makefrag.old && ln -s $(readlink -f ../accel/config/Makefrag) ../Makefrag)
+#(stat ../riscv-tools/riscv-isa-sim/accel             1>/dev/null 2>&1) || \
+#    (ln -s $(readlink -f ../accel/isa-sim/accel) ../riscv-tools/riscv-isa-sim/accel)
 #(stat ../riscv-tools/riscv-isa-sim/configure.ac.old 1>/dev/null 2>&1) || \
-#    (mv ../riscv-tools/riscv-isa-sim/configure.ac ../riscv-tools/riscv-isa-sim/configure.ac.old && ln -s $(readlink -f ../sha3-accel/isa-sim/configure.ac) ../riscv-tools/riscv-isa-sim/configure.ac && ln -s $(readlink -f ../sha3-accel/isa-sim/riscv-sha3.pc.in) ../riscv-tools/riscv-isa-sim/riscv-sha3.pc.in)
+#    (mv ../riscv-tools/riscv-isa-sim/configure.ac ../riscv-tools/riscv-isa-sim/configure.ac.old && ln -s $(readlink -f ../accel/isa-sim/configure.ac) ../riscv-tools/riscv-isa-sim/configure.ac && ln -s $(readlink -f ../accel/isa-sim/riscv-sha3.pc.in) ../riscv-tools/riscv-isa-sim/riscv-sha3.pc.in)
 (stat ../src/main/scala/PrivateConfigs.scala 1>/dev/null 2>&1) || \
-    (ln -s $(readlink -f ../sha3-accel/config/PrivateConfigs.scala) ../src/main/scala/PrivateConfigs.scala)
-((patch -N --dry-run $(readlink -f ../vsim/Makefile) ../sha3-accel/patches/vsim/Makefile.patch 1>/dev/null 2>&1) && \
-		patch -N $(readlink -f ../vsim/Makefile) ../sha3-accel/patches/vsim/Makefile.patch 1>/dev/null 2>&1 && \
+    (ln -s $(readlink -f ../accel/config/PrivateConfigs.scala) ../src/main/scala/PrivateConfigs.scala)
+((patch -N --dry-run $(readlink -f ../vsim/Makefile) ../accel/patches/vsim/Makefile.patch 1>/dev/null 2>&1) && \
+		patch -N $(readlink -f ../vsim/Makefile) ../accel/patches/vsim/Makefile.patch 1>/dev/null 2>&1 && \
 		echo "Patching makefile") || echo "Makefile is already patched"
-((patch -N --dry-run $(readlink -f ../vsim/Makefrag) ../sha3-accel/patches/vsim/Makefrag.patch 1>/dev/null 2>&1) && \
-		patch -N $(readlink -f ../vsim/Makefrag) ../sha3-accel/patches/vsim/Makefrag.patch 1>/dev/null 2>&1 && \
+((patch -N --dry-run $(readlink -f ../vsim/Makefrag) ../accel/patches/vsim/Makefrag.patch 1>/dev/null 2>&1) && \
+		patch -N $(readlink -f ../vsim/Makefrag) ../accel/patches/vsim/Makefrag.patch 1>/dev/null 2>&1 && \
 		echo "Patching makefrag") || echo "Makefrag is already patched"

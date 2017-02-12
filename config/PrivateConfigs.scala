@@ -112,7 +112,3 @@ class Bsg1AccelFPGAConfig extends Config(new BsgAccelConfig ++ new With1Accel ++
 class Bsg2AccelFPGAConfig extends Config(new BsgAccelConfig ++ new With2Accel ++ new DefaultFPGAConfig)
 class Bsg3AccelFPGAConfig extends Config(new BsgAccelConfig ++ new With3Accel ++ new DefaultFPGAConfig)
 class Bsg4AccelFPGAConfig extends Config(new BsgAccelConfig ++ new With4Accel ++ new DefaultFPGAConfig)
-
-class HurricaneConfig extends Config(new With2Cores ++ new WithOneOrMaxChannels ++ new With8MemoryChannels ++ new WithL2Capacity256 ++ new DefaultL2VLSIConfig ++ new BsgAccelConfig ++ new With1Accel)
-
-

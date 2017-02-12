@@ -1,4 +1,3 @@
-//module AccumulatorExample(input clk, input reset,
 module Accel0(input clk, input reset,
     output io_cmd_ready,
     input  io_cmd_valid,
@@ -331,7 +330,7 @@ module Accel0(input clk, input reset,
   assign T59 = stallReg ^ 1'h1;
   assign T60 = Queue_io_deq_valid & Queue_io_deq_bits_inst_xd;
   assign io_cmd_ready = Queue_io_enq_ready;
-  Queue_10 Queue(.clk(clk), .reset(reset),
+  Queue_Accum Queue(.clk(clk), .reset(reset),
        .io_enq_ready( Queue_io_enq_ready ),
        .io_enq_valid( io_cmd_valid ),
        .io_enq_bits_inst_funct( io_cmd_bits_inst_funct ),
@@ -395,4 +394,167 @@ module Accel0(input clk, input reset,
   end
 endmodule
 
+module Queue_Accum(input clk, input reset,
+    output io_enq_ready,
+    input  io_enq_valid,
+    input [6:0] io_enq_bits_inst_funct,
+    input [4:0] io_enq_bits_inst_rs2,
+    input [4:0] io_enq_bits_inst_rs1,
+    input  io_enq_bits_inst_xd,
+    input  io_enq_bits_inst_xs1,
+    input  io_enq_bits_inst_xs2,
+    input [4:0] io_enq_bits_inst_rd,
+    input [6:0] io_enq_bits_inst_opcode,
+    input [63:0] io_enq_bits_rs1,
+    input [63:0] io_enq_bits_rs2,
+    input  io_deq_ready,
+    output io_deq_valid,
+    output[6:0] io_deq_bits_inst_funct,
+    output[4:0] io_deq_bits_inst_rs2,
+    output[4:0] io_deq_bits_inst_rs1,
+    output io_deq_bits_inst_xd,
+    output io_deq_bits_inst_xs1,
+    output io_deq_bits_inst_xs2,
+    output[4:0] io_deq_bits_inst_rd,
+    output[6:0] io_deq_bits_inst_opcode,
+    output[63:0] io_deq_bits_rs1,
+    output[63:0] io_deq_bits_rs2,
+    output[1:0] io_count
+);
 
+  wire[1:0] T0;
+  wire ptr_diff;
+  reg  R1;
+  wire T35;
+  wire T2;
+  wire T3;
+  wire do_deq;
+  reg  R4;
+  wire T36;
+  wire T5;
+  wire T6;
+  wire do_enq;
+  wire T7;
+  wire ptr_match;
+  reg  maybe_full;
+  wire T37;
+  wire T8;
+  wire T9;
+  wire[63:0] T10;
+  wire[159:0] T11;
+  reg [159:0] ram [1:0];
+  wire[159:0] T12;
+  wire[159:0] T13;
+  wire[159:0] T14;
+  wire[140:0] T15;
+  wire[134:0] T16;
+  wire[127:0] T17;
+  wire[5:0] T18;
+  wire[18:0] T19;
+  wire[6:0] T20;
+  wire[1:0] T21;
+  wire[11:0] T22;
+  wire[63:0] T23;
+  wire[6:0] T24;
+  wire[4:0] T25;
+  wire T26;
+  wire T27;
+  wire T28;
+  wire[4:0] T29;
+  wire[4:0] T30;
+  wire[6:0] T31;
+  wire T32;
+  wire empty;
+  wire T33;
+  wire T34;
+  wire full;
+
+`ifndef SYNTHESIS
+// synthesis translate_off
+  integer initvar;
+  initial begin
+    #0.002;
+    R1 = {1{$random}};
+    R4 = {1{$random}};
+    maybe_full = {1{$random}};
+    for (initvar = 0; initvar < 2; initvar = initvar+1)
+      ram[initvar] = {5{$random}};
+  end
+// synthesis translate_on
+`endif
+
+  assign io_count = T0;
+  assign T0 = {T7, ptr_diff};
+  assign ptr_diff = R4 - R1;
+  assign T35 = reset ? 1'h0 : T2;
+  assign T2 = do_deq ? T3 : R1;
+  assign T3 = R1 + 1'h1;
+  assign do_deq = io_deq_ready & io_deq_valid;
+  assign T36 = reset ? 1'h0 : T5;
+  assign T5 = do_enq ? T6 : R4;
+  assign T6 = R4 + 1'h1;
+  assign do_enq = io_enq_ready & io_enq_valid;
+  assign T7 = maybe_full & ptr_match;
+  assign ptr_match = R4 == R1;
+  assign T37 = reset ? 1'h0 : T8;
+  assign T8 = T9 ? do_enq : maybe_full;
+  assign T9 = do_enq != do_deq;
+  assign io_deq_bits_rs2 = T10;
+  assign T10 = T11[6'h3f:1'h0];
+  assign T11 = ram[R1];
+  assign T13 = T14;
+  assign T14 = {T19, T15};
+  assign T15 = {T18, T16};
+  assign T16 = {io_enq_bits_inst_opcode, T17};
+  assign T17 = {io_enq_bits_rs1, io_enq_bits_rs2};
+  assign T18 = {io_enq_bits_inst_xs2, io_enq_bits_inst_rd};
+  assign T19 = {T22, T20};
+  assign T20 = {io_enq_bits_inst_rs1, T21};
+  assign T21 = {io_enq_bits_inst_xd, io_enq_bits_inst_xs1};
+  assign T22 = {io_enq_bits_inst_funct, io_enq_bits_inst_rs2};
+  assign io_deq_bits_rs1 = T23;
+  assign T23 = T11[7'h7f:7'h40];
+  assign io_deq_bits_inst_opcode = T24;
+  assign T24 = T11[8'h86:8'h80];
+  assign io_deq_bits_inst_rd = T25;
+  assign T25 = T11[8'h8b:8'h87];
+  assign io_deq_bits_inst_xs2 = T26;
+  assign T26 = T11[8'h8c:8'h8c];
+  assign io_deq_bits_inst_xs1 = T27;
+  assign T27 = T11[8'h8d:8'h8d];
+  assign io_deq_bits_inst_xd = T28;
+  assign T28 = T11[8'h8e:8'h8e];
+  assign io_deq_bits_inst_rs1 = T29;
+  assign T29 = T11[8'h93:8'h8f];
+  assign io_deq_bits_inst_rs2 = T30;
+  assign T30 = T11[8'h98:8'h94];
+  assign io_deq_bits_inst_funct = T31;
+  assign T31 = T11[8'h9f:8'h99];
+  assign io_deq_valid = T32;
+  assign T32 = empty ^ 1'h1;
+  assign empty = ptr_match & T33;
+  assign T33 = maybe_full ^ 1'h1;
+  assign io_enq_ready = T34;
+  assign T34 = full ^ 1'h1;
+  assign full = ptr_match & maybe_full;
+
+  always @(posedge clk) begin
+    if(reset) begin
+      R1 <= 1'h0;
+    end else if(do_deq) begin
+      R1 <= T3;
+    end
+    if(reset) begin
+      R4 <= 1'h0;
+    end else if(do_enq) begin
+      R4 <= T6;
+    end
+    if(reset) begin
+      maybe_full <= 1'h0;
+    end else if(T9) begin
+      maybe_full <= do_enq;
+    end
+    if (do_enq)
+      ram[R4] <= T13;
+  end
+endmodule
